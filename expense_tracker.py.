@@ -1,0 +1,44 @@
+import csv
+
+EXPENSE_FILE = "expenses.csv"
+
+# Function to add an expense
+def add_expense(date, category, amount, description):
+    with open(EXPENSE_FILE, mode="a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([date, category, amount, description])
+    print("Expense added successfully!")
+
+# Function to view all expenses
+def view_expenses():
+    try:
+        with open(EXPENSE_FILE, mode="r") as file:
+            reader = csv.reader(file)
+            print("\nDate\tCategory\tAmount\tDescription")
+            print("-" * 40)
+            for row in reader:
+                print("\t".join(row))
+    except FileNotFoundError:
+        print("No expenses recorded yet.")
+
+# Main menu
+while True:
+    print("\nExpense Tracker")
+    print("1. Add Expense")
+    print("2. View Expenses")
+    print("3. Exit")
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        date = input("Enter date (YYYY-MM-DD): ")
+        category = input("Enter category (Food, Travel, etc.): ")
+        amount = input("Enter amount: ")
+        description = input("Enter description: ")
+        add_expense(date, category, amount, description)
+    elif choice == "2":
+        view_expenses()
+    elif choice == "3":
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid choice! Try again.")
